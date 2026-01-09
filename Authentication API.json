@@ -1,0 +1,1456 @@
+{
+  "v": 11,
+  "id": "cmf5fq9f90ctsf21k2rdglex8",
+  "name": "Authentication API",
+  "folders": [
+    {
+      "v": 11,
+      "id": "cmf5fq9h20cu3f21kidpeirmp",
+      "name": "Account & Profile",
+      "folders": [],
+      "requests": [
+        {
+          "v": "17",
+          "name": "Get Profile",
+          "method": "GET",
+          "endpoint": "<<base_url>>/auth/profile",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "token": "<<access_token>>",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {
+            "Get Profile (200 OK)": {
+              "name": "Get Profile (200 OK)",
+              "originalRequest": {
+                "v": "6",
+                "name": "Get Profile (200 OK)",
+                "method": "GET",
+                "endpoint": "<<base_url>>/profile",
+                "headers": [],
+                "params": [],
+                "body": {
+                  "contentType": null,
+                  "body": null
+                },
+                "auth": {
+                  "authType": "inherit",
+                  "authActive": true
+                },
+                "requestVariables": []
+              },
+              "status": "OK",
+              "code": 200,
+              "headers": [
+                {
+                  "key": "Server",
+                  "value": "nginx/1.25.2"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Accept-Encoding"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.28"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 07 Aug 2025 16:49:41 GMT"
+                },
+                {
+                  "key": "X-RateLimit-Limit",
+                  "value": "10"
+                },
+                {
+                  "key": "X-RateLimit-Remaining",
+                  "value": "9"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Encoding",
+                  "value": "gzip"
+                }
+              ],
+              "body": "{\n    \"status\": \"success\",\n    \"success\": true,\n    \"message\": \"Successfully fetched profile.\",\n    \"data\": {\n        \"id\": 1,\n        \"email\": \"superadmin@mail.com\",\n        \"username\": \"superadmin\",\n        \"email_verified_at\": true,\n        \"user_info\": {\n            \"photo_path\": \"http://dppimes.test/images/avatar.png\",\n            \"full_name\": \"superadmin\"\n        },\n        \"has_access\": {\n            \"user_id\": 1,\n            \"role\": \"superadmin\"\n        }\n    }\n}"
+            }
+          },
+          "description": null
+        },
+        {
+          "v": "17",
+          "name": "Change Password",
+          "method": "POST",
+          "endpoint": "<<base_url>>/auth/profile/change-password",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "token": "<<access_token>>",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n    \"password_old\": \"Superadmin123!!\",\n    \"password_new\": \"password\",\n    \"password_confirmation\": \"password\"\n}"
+          },
+          "requestVariables": [],
+          "responses": {
+            "Change Password (200 OK)": {
+              "name": "Change Password (200 OK)",
+              "originalRequest": {
+                "v": "6",
+                "name": "Change Password (200 OK)",
+                "method": "POST",
+                "endpoint": "<<base_url>>/auth/profile/change-password",
+                "headers": [],
+                "params": [],
+                "body": {
+                  "contentType": "application/json",
+                  "body": "{\n    \"password_old\": \"password\",\n    \"password_new\": \"Superadmin123!!\",\n    \"password_confirmation\": \"Superadmin123!!\"\n}"
+                },
+                "auth": {
+                  "authType": "inherit",
+                  "authActive": true
+                },
+                "requestVariables": []
+              },
+              "status": "OK",
+              "code": 200,
+              "headers": [
+                {
+                  "key": "Server",
+                  "value": "nginx/1.25.2"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Accept-Encoding"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.28"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 07 Aug 2025 16:42:55 GMT"
+                },
+                {
+                  "key": "X-RateLimit-Limit",
+                  "value": "3"
+                },
+                {
+                  "key": "X-RateLimit-Remaining",
+                  "value": "2"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Encoding",
+                  "value": "gzip"
+                }
+              ],
+              "body": "{\n    \"status\": \"success\",\n    \"success\": true,\n    \"message\": \"Successfully Your password has been successfully updated. Please log in again using your new password to continue..\",\n    \"data\": true\n}"
+            }
+          },
+          "description": null
+        }
+      ],
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "headers": [],
+      "variables": [],
+      "description": null
+    }
+  ],
+  "requests": [
+    {
+      "v": "17",
+      "name": "Login",
+      "method": "POST",
+      "endpoint": "<<base_url>>/auth/login",
+      "params": [],
+      "headers": [
+        {
+          "key": "Accept",
+          "value": "application/json",
+          "active": true,
+          "description": ""
+        },
+        {
+          "key": "Content-Type",
+          "value": "application/json",
+          "active": true,
+          "description": ""
+        }
+      ],
+      "preRequestScript": "",
+      "testScript": "",
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "body": {
+        "contentType": "application/json",
+        "body": "{\n    \"email\": \"superadmin@mail.com\",\n    \"password\": \"password\"\n}\n"
+      },
+      "requestVariables": [],
+      "responses": {
+        "Login (401)": {
+          "name": "Login (401)",
+          "originalRequest": {
+            "v": "6",
+            "name": "Login (401)",
+            "method": "POST",
+            "endpoint": "<<base_url>>/auth/login",
+            "headers": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "active": true,
+                "description": ""
+              }
+            ],
+            "params": [],
+            "body": {
+              "contentType": "application/json",
+              "body": "{\r\n    \"email\": \"superadmin@mail.com\",\r\n    \"password\": \"password\"\r\n}"
+            },
+            "auth": {
+              "authType": "inherit",
+              "authActive": true
+            },
+            "requestVariables": []
+          },
+          "status": "Unauthorized",
+          "code": 401,
+          "headers": [
+            {
+              "key": "Server",
+              "value": "nginx/1.25.2"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.2.21"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, private"
+            },
+            {
+              "key": "Date",
+              "value": "Sun, 16 Feb 2025 13:29:42 GMT"
+            },
+            {
+              "key": "X-RateLimit-Limit",
+              "value": "60"
+            },
+            {
+              "key": "X-RateLimit-Remaining",
+              "value": "59"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            }
+          ],
+          "body": "{\n    \"status\": \"error\",\n    \"message\": \"Login was not successfully\",\n    \"errors\": \"Unauthorized\"\n}"
+        },
+        "Login (422)": {
+          "name": "Login (422)",
+          "originalRequest": {
+            "v": "6",
+            "name": "Login (422)",
+            "method": "POST",
+            "endpoint": "<<base_url>>/auth/login",
+            "headers": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "active": true,
+                "description": ""
+              }
+            ],
+            "params": [],
+            "body": {
+              "contentType": "application/json",
+              "body": "{\r\n    \"email\": \"\",\r\n    \"password\": \"\" \r\n}\r\n"
+            },
+            "auth": {
+              "authType": "inherit",
+              "authActive": true
+            },
+            "requestVariables": []
+          },
+          "status": "Unprocessable Content",
+          "code": 422,
+          "headers": [
+            {
+              "key": "Host",
+              "value": "127.0.0.1:8000"
+            },
+            {
+              "key": "Connection",
+              "value": "close"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.2.21"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, private"
+            },
+            {
+              "key": "Date",
+              "value": "Sun, 23 Mar 2025 06:38:49 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "X-RateLimit-Limit",
+              "value": "60"
+            },
+            {
+              "key": "X-RateLimit-Remaining",
+              "value": "59"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            }
+          ],
+          "body": "{\n    \"status\": \"error\",\n    \"message\": \"Validation Error\",\n    \"errors\": {\n        \"email\": [\n            \"Harap isi kolom ini\"\n        ],\n        \"password\": [\n            \"Harap isi kolom ini\"\n        ]\n    }\n}"
+        },
+        "Login  (401)": {
+          "name": "Login  (401)",
+          "originalRequest": {
+            "v": "6",
+            "name": "Login  (401)",
+            "method": "POST",
+            "endpoint": "<<base_url>>/auth/login",
+            "headers": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "active": true,
+                "description": ""
+              }
+            ],
+            "params": [],
+            "body": {
+              "contentType": "application/json",
+              "body": "{\r\n    \"email\": \"superadmin@mail.com\",\r\n    \"password\": \"superadmin\"\r\n}"
+            },
+            "auth": {
+              "authType": "inherit",
+              "authActive": true
+            },
+            "requestVariables": []
+          },
+          "status": "Unauthorized",
+          "code": 401,
+          "headers": [
+            {
+              "key": "Server",
+              "value": "nginx/1.25.2"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.2.21"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, private"
+            },
+            {
+              "key": "Date",
+              "value": "Sun, 16 Feb 2025 01:08:35 GMT"
+            },
+            {
+              "key": "X-RateLimit-Limit",
+              "value": "60"
+            },
+            {
+              "key": "X-RateLimit-Remaining",
+              "value": "58"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            }
+          ],
+          "body": "{\n    \"status\": \"error\",\n    \"message\": \"Username or Password is wrong!\",\n    \"errors\": null\n}"
+        },
+        "Login (200 OK)": {
+          "name": "Login (200 OK)",
+          "originalRequest": {
+            "v": "6",
+            "name": "Login (200 OK)",
+            "method": "POST",
+            "endpoint": "<<base_url>>/auth/login",
+            "headers": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "active": true,
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "active": true,
+                "description": ""
+              }
+            ],
+            "params": [],
+            "body": {
+              "contentType": "application/json",
+              "body": "{\r\n    \"email\": \"superadmin@mail.com\",\r\n    \"password\": \"Superadmin123!!\"\r\n}\r\n"
+            },
+            "auth": {
+              "authType": "inherit",
+              "authActive": true
+            },
+            "requestVariables": []
+          },
+          "status": "OK",
+          "code": 200,
+          "headers": [
+            {
+              "key": "Host",
+              "value": "127.0.0.1:8000"
+            },
+            {
+              "key": "Connection",
+              "value": "close"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.2.28"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, private"
+            },
+            {
+              "key": "Date",
+              "value": "Tue, 02 Sep 2025 13:18:30 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "X-RateLimit-Limit",
+              "value": "5"
+            },
+            {
+              "key": "X-RateLimit-Remaining",
+              "value": "3"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            }
+          ],
+          "body": "{\n    \"status\": \"success\",\n    \"success\": true,\n    \"message\": \"Successfully logged.\",\n    \"data\": {\n        \"token_type\": \"Bearer\",\n        \"access_token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE3NTY4MTkxMTAsImV4cCI6MTc1NjgyMjcxMCwibmJmIjoxNzU2ODE5MTEwLCJqdGkiOiJiVkpybzdiek93R1h1Q1c1Iiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.BI84SyjqaG5nUuUEZXcgxi0FE9Xcgm8_mvkUO_xb484\",\n        \"refresh_token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE3NTY4MTkxMTAsImV4cCI6MTc1NjgyMjcxMCwibmJmIjoxNzU2ODE5MTEwLCJqdGkiOiJ5YXk5b0tVTmJQdkprSHFUIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.Ig1pWuINoaULZGR8u40YkoR-vx-7KlQTdsU4Gi69YHI\",\n        \"expires_in\": 3600,\n        \"email_verified_at\": true,\n        \"user_info\": {\n            \"photo_path\": \"http://127.0.0.1:8000/images/avatar.png\",\n            \"full_name\": \"superadmin\"\n        },\n        \"has_access\": {\n            \"user_id\": 1,\n            \"role\": \"superadmin\"\n        }\n    }\n}"
+        }
+      },
+      "description": null
+    },
+    {
+      "v": "17",
+      "name": "Forgot Password",
+      "method": "POST",
+      "endpoint": "<<base_url>>/auth/forgot-password/request",
+      "params": [],
+      "headers": [
+        {
+          "key": "Accept",
+          "value": "application/json",
+          "active": true,
+          "description": ""
+        },
+        {
+          "key": "X-Platform",
+          "value": "mobile",
+          "active": true,
+          "description": ""
+        }
+      ],
+      "preRequestScript": "",
+      "testScript": "",
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "body": {
+        "contentType": "application/json",
+        "body": "{\n    \"email\": \"superadmin@mail.com\"\n}"
+      },
+      "requestVariables": [],
+      "responses": {
+        "Forgot Password (422)": {
+          "name": "Forgot Password (422)",
+          "originalRequest": {
+            "v": "6",
+            "name": "Forgot Password (422)",
+            "method": "POST",
+            "endpoint": "<<base_url>>/auth/forgot-password/request",
+            "headers": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "active": true,
+                "description": ""
+              },
+              {
+                "key": "X-Platform",
+                "value": "mobile",
+                "active": true,
+                "description": ""
+              }
+            ],
+            "params": [],
+            "body": {
+              "contentType": "application/json",
+              "body": "{\n    \"email\": \"\"\n}"
+            },
+            "auth": {
+              "authType": "inherit",
+              "authActive": true
+            },
+            "requestVariables": []
+          },
+          "status": "Unprocessable Content",
+          "code": 422,
+          "headers": [
+            {
+              "key": "Host",
+              "value": "127.0.0.1:8000"
+            },
+            {
+              "key": "Connection",
+              "value": "close"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.2.21"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, private"
+            },
+            {
+              "key": "Date",
+              "value": "Sun, 23 Mar 2025 06:41:42 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "X-RateLimit-Limit",
+              "value": "60"
+            },
+            {
+              "key": "X-RateLimit-Remaining",
+              "value": "58"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            }
+          ],
+          "body": "{\n    \"status\": \"error\",\n    \"message\": \"Validation Error\",\n    \"errors\": {\n        \"email\": [\n            \"Harap isi kolom ini\"\n        ]\n    }\n}"
+        },
+        "Forgot Password  (401)": {
+          "name": "Forgot Password  (401)",
+          "originalRequest": {
+            "v": "6",
+            "name": "Forgot Password  (401)",
+            "method": "POST",
+            "endpoint": "<<base_url>>/auth/forgot-password/request",
+            "headers": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "active": true,
+                "description": ""
+              }
+            ],
+            "params": [],
+            "body": {
+              "contentType": "application/json",
+              "body": "{\n    \"email\": \"superadmin@mail.comx\"\n}"
+            },
+            "auth": {
+              "authType": "inherit",
+              "authActive": true
+            },
+            "requestVariables": []
+          },
+          "status": "Unauthorized",
+          "code": 401,
+          "headers": [
+            {
+              "key": "Server",
+              "value": "nginx/1.25.2"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.2.21"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, private"
+            },
+            {
+              "key": "Date",
+              "value": "Sun, 16 Feb 2025 03:59:34 GMT"
+            },
+            {
+              "key": "X-RateLimit-Limit",
+              "value": "60"
+            },
+            {
+              "key": "X-RateLimit-Remaining",
+              "value": "59"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            }
+          ],
+          "body": "{\n    \"status\": \"error\",\n    \"message\": \"Reset Link was not successfully\",\n    \"errors\": \"Email is not registered!\"\n}"
+        },
+        "Forgot Password (200 OK)": {
+          "name": "Forgot Password (200 OK)",
+          "originalRequest": {
+            "v": "6",
+            "name": "Forgot Password (200 OK)",
+            "method": "POST",
+            "endpoint": "<<base_url>>/auth/forgot-password/request",
+            "headers": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "active": true,
+                "description": ""
+              },
+              {
+                "key": "X-Platform",
+                "value": "mobile",
+                "active": true,
+                "description": ""
+              }
+            ],
+            "params": [],
+            "body": {
+              "contentType": "application/json",
+              "body": "{\n    \"email\": \"superadmin@mail.com\"\n}"
+            },
+            "auth": {
+              "authType": "inherit",
+              "authActive": true
+            },
+            "requestVariables": []
+          },
+          "status": "OK",
+          "code": 200,
+          "headers": [
+            {
+              "key": "Host",
+              "value": "127.0.0.1:8000"
+            },
+            {
+              "key": "Connection",
+              "value": "close"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.2.28"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, private"
+            },
+            {
+              "key": "Date",
+              "value": "Tue, 02 Sep 2025 13:39:23 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "X-RateLimit-Limit",
+              "value": "3"
+            },
+            {
+              "key": "X-RateLimit-Remaining",
+              "value": "2"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            }
+          ],
+          "body": "{\n    \"status\": \"success\",\n    \"success\": true,\n    \"message\": \"Password reset instructions have been sent to your email.\",\n    \"data\": {\n        \"reset_link\": \"reset-password?token=209264121d3e7126f7e4fdbaadf4391fa63ae9aad165997cce79dcae77242f47&email=superadmin@mail.com\"\n    }\n}"
+        }
+      },
+      "description": null
+    },
+    {
+      "v": "17",
+      "name": "Create New Password",
+      "method": "POST",
+      "endpoint": "<<base_url>>/auth/forgot-password/reset",
+      "params": [
+        {
+          "key": "token",
+          "value": "9f6ed76b56d3fbe0805ffeed515850243bb4c3f5f3f61b86d294af3d833e6a05",
+          "active": true,
+          "description": ""
+        },
+        {
+          "key": "email",
+          "value": "superadmin@mail.com",
+          "active": true,
+          "description": ""
+        }
+      ],
+      "headers": [
+        {
+          "key": "Accept",
+          "value": "application/json",
+          "active": true,
+          "description": ""
+        }
+      ],
+      "preRequestScript": "",
+      "testScript": "",
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "body": {
+        "contentType": "application/json",
+        "body": "{\n    \"password\": \"Password123!!\",\n    \"password_confirmation\": \"Password123!!\"\n}"
+      },
+      "requestVariables": [],
+      "responses": {
+        "Create New Password (401)": {
+          "name": "Create New Password (401)",
+          "originalRequest": {
+            "v": "6",
+            "name": "Create New Password (401)",
+            "method": "POST",
+            "endpoint": "<<base_url>>/auth/forgot-password/reset",
+            "headers": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "active": true,
+                "description": ""
+              }
+            ],
+            "params": [
+              {
+                "key": "token",
+                "value": "XtuHWwOmj2kesbpRV2jh",
+                "active": true,
+                "description": ""
+              },
+              {
+                "key": "email",
+                "value": "superadmin@mail.com",
+                "active": true,
+                "description": ""
+              }
+            ],
+            "body": {
+              "contentType": "application/json",
+              "body": "{\n    \"password\": \"password\",\n    \"password_confirmation\": \"password\"\n}"
+            },
+            "auth": {
+              "authType": "inherit",
+              "authActive": true
+            },
+            "requestVariables": []
+          },
+          "status": "Unauthorized",
+          "code": 401,
+          "headers": [
+            {
+              "key": "Server",
+              "value": "nginx/1.25.2"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.2.21"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, private"
+            },
+            {
+              "key": "Date",
+              "value": "Sun, 16 Feb 2025 05:30:16 GMT"
+            },
+            {
+              "key": "X-RateLimit-Limit",
+              "value": "60"
+            },
+            {
+              "key": "X-RateLimit-Remaining",
+              "value": "58"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            }
+          ],
+          "body": "{\n    \"status\": \"error\",\n    \"message\": \"Reset Password was not successfully\",\n    \"errors\": \"This password reset token is invalid.\"\n}"
+        },
+        "Create New Password (422)": {
+          "name": "Create New Password (422)",
+          "originalRequest": {
+            "v": "6",
+            "name": "Create New Password (422)",
+            "method": "POST",
+            "endpoint": "<<base_url>>/auth/forgot-password/reset",
+            "headers": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "active": true,
+                "description": ""
+              }
+            ],
+            "params": [
+              {
+                "key": "token",
+                "value": "XtuHWwOmj2kesbpRV2jh",
+                "active": true,
+                "description": ""
+              },
+              {
+                "key": "email",
+                "value": "superadmin@mail.com",
+                "active": true,
+                "description": ""
+              }
+            ],
+            "body": {
+              "contentType": "application/json",
+              "body": "{\n    \"password\": \"password\",\n    \"password_confirmation\": \"password\"\n}"
+            },
+            "auth": {
+              "authType": "inherit",
+              "authActive": true
+            },
+            "requestVariables": []
+          },
+          "status": "Unprocessable Content",
+          "code": 422,
+          "headers": [
+            {
+              "key": "Server",
+              "value": "nginx/1.25.2"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.2.21"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, private"
+            },
+            {
+              "key": "Date",
+              "value": "Sun, 16 Feb 2025 04:55:18 GMT"
+            },
+            {
+              "key": "X-RateLimit-Limit",
+              "value": "60"
+            },
+            {
+              "key": "X-RateLimit-Remaining",
+              "value": "59"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            }
+          ],
+          "body": "{\n    \"status\": \"error\",\n    \"message\": \"Validation Error\",\n    \"errors\": {\n        \"password_new\": [\n            \"The password new field confirmation does not match.\"\n        ]\n    }\n}"
+        },
+        "Create New Password (200 OK)": {
+          "name": "Create New Password (200 OK)",
+          "originalRequest": {
+            "v": "6",
+            "name": "Create New Password (200 OK)",
+            "method": "POST",
+            "endpoint": "<<base_url>>/auth/forgot-password/reset",
+            "headers": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "active": true,
+                "description": ""
+              }
+            ],
+            "params": [
+              {
+                "key": "token",
+                "value": "a0641a85ddc4238672bdc187ecfa78665d57958ff8f775856be225a51ae28b8a",
+                "active": true,
+                "description": ""
+              },
+              {
+                "key": "email",
+                "value": "superadmin@mail.com",
+                "active": true,
+                "description": ""
+              }
+            ],
+            "body": {
+              "contentType": "application/json",
+              "body": "{\n    \"password\": \"password\",\n    \"password_confirmation\": \"password\"\n}"
+            },
+            "auth": {
+              "authType": "inherit",
+              "authActive": true
+            },
+            "requestVariables": []
+          },
+          "status": "OK",
+          "code": 200,
+          "headers": [
+            {
+              "key": "Server",
+              "value": "nginx/1.25.2"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Vary",
+              "value": "Accept-Encoding"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.2.21"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, private"
+            },
+            {
+              "key": "Date",
+              "value": "Sun, 16 Feb 2025 05:55:08 GMT"
+            },
+            {
+              "key": "X-RateLimit-Limit",
+              "value": "60"
+            },
+            {
+              "key": "X-RateLimit-Remaining",
+              "value": "59"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Encoding",
+              "value": "gzip"
+            }
+          ],
+          "body": "{\n    \"status\": \"success\",\n    \"message\": \"Reset Password is successfully\",\n    \"data\": true\n}"
+        }
+      },
+      "description": null
+    },
+    {
+      "v": "17",
+      "name": "Refresh Token",
+      "method": "POST",
+      "endpoint": "<<base_url>>/auth/token/refresh",
+      "params": [],
+      "headers": [
+        {
+          "key": "Accept",
+          "value": "application/json",
+          "active": true,
+          "description": ""
+        }
+      ],
+      "preRequestScript": "",
+      "testScript": "",
+      "auth": {
+        "authType": "bearer",
+        "token": "<<access_token>>",
+        "authActive": true
+      },
+      "body": {
+        "contentType": null,
+        "body": null
+      },
+      "requestVariables": [],
+      "responses": {
+        "Refresh Token (400)": {
+          "name": "Refresh Token (400)",
+          "originalRequest": {
+            "v": "6",
+            "name": "Refresh Token (400)",
+            "method": "POST",
+            "endpoint": "<<base_url>>/auth/token/refresh",
+            "headers": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "active": true,
+                "description": ""
+              }
+            ],
+            "params": [],
+            "body": {
+              "contentType": null,
+              "body": null
+            },
+            "auth": {
+              "authType": "inherit",
+              "authActive": true
+            },
+            "requestVariables": []
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "headers": [
+            {
+              "key": "Host",
+              "value": "127.0.0.1:8000"
+            },
+            {
+              "key": "Connection",
+              "value": "close"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.2.21"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, private"
+            },
+            {
+              "key": "Date",
+              "value": "Thu, 01 May 2025 14:11:11 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "X-RateLimit-Limit",
+              "value": "60"
+            },
+            {
+              "key": "X-RateLimit-Remaining",
+              "value": "58"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            }
+          ],
+          "body": "{\n    \"status\": \"error\",\n    \"message\": \"Refresh Token was not successfully\",\n    \"errors\": \"The token has been blacklisted\"\n}"
+        },
+        "Refresh Token (200 OK)": {
+          "name": "Refresh Token (200 OK)",
+          "originalRequest": {
+            "v": "6",
+            "name": "Refresh Token (200 OK)",
+            "method": "POST",
+            "endpoint": "<<base_url>>/auth/token/refresh",
+            "headers": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "active": true,
+                "description": ""
+              }
+            ],
+            "params": [],
+            "body": {
+              "contentType": null,
+              "body": null
+            },
+            "auth": {
+              "authType": "inherit",
+              "authActive": true
+            },
+            "requestVariables": []
+          },
+          "status": "OK",
+          "code": 200,
+          "headers": [
+            {
+              "key": "Server",
+              "value": "nginx/1.25.2"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Vary",
+              "value": "Accept-Encoding"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.2.28"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, private"
+            },
+            {
+              "key": "Date",
+              "value": "Tue, 15 Jul 2025 23:31:33 GMT"
+            },
+            {
+              "key": "X-RateLimit-Limit",
+              "value": "10"
+            },
+            {
+              "key": "X-RateLimit-Remaining",
+              "value": "9"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Encoding",
+              "value": "gzip"
+            }
+          ],
+          "body": "{\n    \"status\": \"success\",\n    \"message\": \"Successfully refreshed token.\",\n    \"data\": {\n        \"access_token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZHBwaW1lcy50ZXN0L2FwaS92MS9hdXRoL3Rva2VuL3JlZnJlc2giLCJpYXQiOjE3NTI2MTg0NDksImV4cCI6MTc1MjYyNTg5MywibmJmIjoxNzUyNjIyMjkzLCJqdGkiOiJ0RkpTT3hJM092RWk0TWxJIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.BQ8Py3gxr4Qg5mA_1oiC8bxFwuqYv-WmJjuj08D0gh4\"\n    }\n}"
+        }
+      },
+      "description": null
+    },
+    {
+      "v": "17",
+      "name": "Logout",
+      "method": "POST",
+      "endpoint": "<<base_url>>/auth/logout",
+      "params": [],
+      "headers": [
+        {
+          "key": "Accept",
+          "value": "application/json",
+          "active": true,
+          "description": ""
+        }
+      ],
+      "preRequestScript": "",
+      "testScript": "",
+      "auth": {
+        "authType": "bearer",
+        "token": "<<access_token>>",
+        "authActive": true
+      },
+      "body": {
+        "contentType": null,
+        "body": null
+      },
+      "requestVariables": [],
+      "responses": {
+        "Logout (401)": {
+          "name": "Logout (401)",
+          "originalRequest": {
+            "v": "6",
+            "name": "Logout (401)",
+            "method": "POST",
+            "endpoint": "<<base_url>>/auth/logout",
+            "headers": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "active": true,
+                "description": ""
+              }
+            ],
+            "params": [],
+            "body": {
+              "contentType": null,
+              "body": null
+            },
+            "auth": {
+              "authType": "inherit",
+              "authActive": true
+            },
+            "requestVariables": []
+          },
+          "status": "Unauthorized",
+          "code": 401,
+          "headers": [
+            {
+              "key": "Server",
+              "value": "nginx/1.25.2"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.2.21"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, private"
+            },
+            {
+              "key": "Date",
+              "value": "Sun, 16 Feb 2025 02:38:59 GMT"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            }
+          ],
+          "body": "{\n    \"status\": \"error\",\n    \"message\": \"Unauthorized: Token is missing or invalid\",\n    \"errors\": null\n}"
+        },
+        "Logout (200 OK)": {
+          "name": "Logout (200 OK)",
+          "originalRequest": {
+            "v": "6",
+            "name": "Logout (200 OK)",
+            "method": "POST",
+            "endpoint": "<<base_url>>/auth/logout",
+            "headers": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "active": true,
+                "description": ""
+              }
+            ],
+            "params": [],
+            "body": {
+              "contentType": null,
+              "body": null
+            },
+            "auth": {
+              "authType": "inherit",
+              "authActive": true
+            },
+            "requestVariables": []
+          },
+          "status": "OK",
+          "code": 200,
+          "headers": [
+            {
+              "key": "Server",
+              "value": "nginx/1.25.2"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Vary",
+              "value": "Accept-Encoding"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.2.28"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, private"
+            },
+            {
+              "key": "Date",
+              "value": "Tue, 15 Jul 2025 01:31:58 GMT"
+            },
+            {
+              "key": "X-RateLimit-Limit",
+              "value": "10"
+            },
+            {
+              "key": "X-RateLimit-Remaining",
+              "value": "9"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Encoding",
+              "value": "gzip"
+            }
+          ],
+          "body": "{\n    \"status\": \"success\",\n    \"message\": \"Successfully logout.\",\n    \"data\": true\n}"
+        }
+      },
+      "description": null
+    }
+  ],
+  "auth": {
+    "authType": "inherit",
+    "authActive": true
+  },
+  "headers": [],
+  "variables": [],
+  "description": null
+}

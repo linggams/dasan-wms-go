@@ -1,0 +1,132 @@
+package main
+
+import (
+	"context"
+	"fmt"
+	"net/http"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
+
+	"github.com/gin-gonic/gin"
+	"github.com/rs/zerolog"
+	"github.com/rs/zerolog/log"
+
+	"github.com/dppi/dppierp-api/internal/config"
+	"github.com/dppi/dppierp-api/internal/handler"
+	"github.com/dppi/dppierp-api/internal/middleware"
+	"github.com/dppi/dppierp-api/internal/repository"
+	"github.com/dppi/dppierp-api/internal/service"
+	"github.com/dppi/dppierp-api/pkg/database"
+)
+
+func main() {
+	// Setup logging
+	zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
+	log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
+
+	// Load configuration
+	cfg, err := config.Load()
+	if err != nil {
+		log.Fatal().Err(err).Msg("Failed to load configuration")
+	}
+
+	// Set Gin mode
+	if cfg.App.Env == "production" {
+		gin.SetMode(gin.ReleaseMode)
+	}
+
+	// Connect to database
+	db, err := database.NewMySQLConnection(&cfg.Database)
+	if err != nil {
+		log.Fatal().Err(err).Msg("Failed to connect to database")
+	}
+	defer db.Close()
+
+	log.Info().Msg("Connected to database successfully")
+
+	// Initialize repositories
+	fabricRepo := repository.NewFabricRepository(db)
+	rackRepo := repository.NewRackRepository(db)
+	userRepo := repository.NewUserRepository(db)
+
+	// Initialize middleware
+	authMiddleware := middleware.NewAuthMiddleware(cfg.JWT.Secret)
+
+	// Initialize services
+	checkpointService := service.NewCheckpointService(fabricRepo, rackRepo)
+	authService := service.NewAuthService(userRepo, authMiddleware)
+
+	// Initialize handlers
+	checkpointHandler := handler.NewCheckpointHandler(checkpointService)
+	authHandler := handler.NewAuthHandler(authService)
+
+	// Setup router
+	router := gin.New()
+	router.Use(gin.Recovery())
+	router.Use(middleware.Logger())
+	router.Use(middleware.CORSMiddleware(cfg.CORS.AllowedOrigins))
+
+	// Health check
+	router.GET("/health", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{"status": "healthy"})
+	})
+
+	// Auth routes (public)
+	authGroup := router.Group("/auth")
+	{
+		authGroup.POST("/login", authHandler.Login)
+	}
+
+	// Protected auth routes
+	authProtected := router.Group("/auth")
+	authProtected.Use(authMiddleware.Authenticate())
+	{
+		authProtected.GET("/me", authHandler.Me)
+	}
+
+	// Check Point API routes (protected)
+	checkpointGroup := router.Group("/check-point/v1")
+	checkpointGroup.Use(authMiddleware.Authenticate())
+	{
+		checkpointGroup.GET("/overview", checkpointHandler.GetOverview)
+		checkpointGroup.POST("/scan", checkpointHandler.ScanQR)
+		checkpointGroup.POST("/move", checkpointHandler.MoveStage)
+		checkpointGroup.POST("/scan-rack", checkpointHandler.ScanRack)
+		checkpointGroup.POST("/relocation", checkpointHandler.Relocate)
+	}
+
+	// Create server
+	srv := &http.Server{
+		Addr:         ":" + cfg.App.Port,
+		Handler:      router,
+		ReadTimeout:  15 * time.Second,
+		WriteTimeout: 15 * time.Second,
+		IdleTimeout:  60 * time.Second,
+	}
+
+	// Start server in goroutine
+	go func() {
+		log.Info().Str("port", cfg.App.Port).Msg("Starting server")
+		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			log.Fatal().Err(err).Msg("Failed to start server")
+		}
+	}()
+
+	// Wait for interrupt signal
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
+	<-quit
+	log.Info().Msg("Shutting down server...")
+
+	// Graceful shutdown
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+
+	if err := srv.Shutdown(ctx); err != nil {
+		log.Fatal().Err(err).Msg("Server forced to shutdown")
+	}
+
+	fmt.Println("Server exited properly")
+}
