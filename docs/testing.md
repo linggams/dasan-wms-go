@@ -175,7 +175,7 @@ curl -X POST http://localhost:8080/check-point/v1/relocation \
 
 ## Continuous Integration
 
-Add to your CI/CD pipeline:
+Add to CI/CD pipeline:
 
 ```yaml
 # GitHub Actions example

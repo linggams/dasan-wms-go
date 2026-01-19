@@ -99,7 +99,7 @@ func main() {
 
 	// Create server
 	srv := &http.Server{
-		Addr:         ":" + cfg.App.Port,
+                Addr: "0.0.0.0:" + cfg.App.Port,
 		Handler:      router,
 		ReadTimeout:  15 * time.Second,
 		WriteTimeout: 15 * time.Second,

@@ -30,7 +30,7 @@ go mod download
 # Copy environment file
 cp .env.example .env
 
-# Edit with your database credentials
+# Edit database credentials
 nano .env
 ```
 
@@ -41,15 +41,15 @@ nano .env
 APP_ENV=development
 APP_PORT=8080
 
-# Database (adjust to your MySQL credentials)
+# Database
 DB_HOST=localhost
 DB_PORT=3306
 DB_USER=root
-DB_PASSWORD=your_password
+DB_PASSWORD=password
 DB_NAME=dppimes
 
-# JWT (change to a minimum 32-character secure secret)
-JWT_SECRET=your-super-secret-key-minimum-32-characters
+# JWT
+JWT_SECRET=super-secret-key-minimum-32-characters
 
 # CORS
 CORS_ALLOWED_ORIGINS=*
@@ -132,17 +132,17 @@ APP_ENV=production
 APP_PORT=8080
 
 # Use appropriate connection pooling
-DB_HOST=your-production-db-host
+DB_HOST=production-db-host
 DB_PORT=3306
 DB_USER=app_user
 DB_PASSWORD=secure_password
 DB_NAME=dppimes
 
 # Use a very secure secret (minimum 32 characters)
-JWT_SECRET=your-very-secure-production-secret-key-here
+JWT_SECRET=very-secure-production-secret-key-here
 
 # Restrict CORS to valid domains
-CORS_ALLOWED_ORIGINS=https://your-domain.com,https://app.your-domain.com
+CORS_ALLOWED_ORIGINS=https://domain.com,https://app.domain.com
 ```
 
 ### Docker Production Build
@@ -156,9 +156,9 @@ docker run -d \
   --name dppierp-api \
   -p 8080:8080 \
   -e APP_ENV=production \
-  -e DB_HOST=your-db-host \
-  -e DB_PASSWORD=your-password \
-  -e JWT_SECRET=your-secret \
+  -e DB_HOST=db-host \
+  -e DB_PASSWORD=password \
+  -e JWT_SECRET=secret \
   dppierp-api:latest
 ```
 
@@ -167,7 +167,7 @@ docker run -d \
 ```nginx
 server {
     listen 80;
-    server_name api.yourdomain.com;
+    server_name api.domain.com;
 
     location / {
         proxy_pass http://localhost:8080;
