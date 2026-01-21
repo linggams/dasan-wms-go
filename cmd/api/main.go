@@ -40,7 +40,6 @@ func main() {
 
 	// Setup logging
 	zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
-	zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
 	log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
 
 	log.Info().
@@ -132,7 +131,6 @@ func main() {
 		checkpointGroup.POST("/scan", checkpointHandler.ScanQR)
 		checkpointGroup.POST("/move", checkpointHandler.MoveStage)
 		checkpointGroup.POST("/scan-rack", checkpointHandler.ScanRack)
-		checkpointGroup.POST("/relocation", checkpointHandler.Relocate)
 		checkpointGroup.POST("/relocation", checkpointHandler.Relocate)
 	}
 
