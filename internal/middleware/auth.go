@@ -72,6 +72,27 @@ func (m *AuthMiddleware) ValidateToken(tokenString string) (*Claims, error) {
 	return claims, nil
 }
 
+// ValidateRefreshToken validates a refresh token and returns the user ID
+func (m *AuthMiddleware) ValidateRefreshToken(tokenString string) (int64, error) {
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		return []byte(m.secret), nil
+	})
+
+	if err != nil {
+		return 0, err
+	}
+
+	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+		if claims["type"] != "refresh" {
+			return 0, jwt.ErrSignatureInvalid
+		}
+		userID := int64(claims["user_id"].(float64))
+		return userID, nil
+	}
+
+	return 0, jwt.ErrSignatureInvalid
+}
+
 // Authenticate is a Gin middleware for JWT authentication
 func (m *AuthMiddleware) Authenticate() gin.HandlerFunc {
 	return func(c *gin.Context) {

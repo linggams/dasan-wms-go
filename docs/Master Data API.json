@@ -1,0 +1,1053 @@
+{
+  "v": 11,
+  "id": "cmf5gln6o0kf8j71knja48udc",
+  "name": "Master Data API",
+  "folders": [],
+  "requests": [
+    {
+      "v": "17",
+      "name": "Get Cuttings",
+      "method": "GET",
+      "endpoint": "<<base_url>>/master/cuttings",
+      "params": [],
+      "headers": [],
+      "preRequestScript": "",
+      "testScript": "",
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "body": {
+        "contentType": null,
+        "body": null
+      },
+      "requestVariables": [],
+      "responses": {
+        "Get Cuttings (200 OK)": {
+          "name": "Get Cuttings (200 OK)",
+          "originalRequest": {
+            "v": "6",
+            "name": "Get Cuttings (200 OK)",
+            "method": "GET",
+            "endpoint": "<<base_url>>/master/cuttings",
+            "headers": [],
+            "params": [],
+            "body": {
+              "contentType": null,
+              "body": null
+            },
+            "auth": {
+              "authType": "inherit",
+              "authActive": true
+            },
+            "requestVariables": []
+          },
+          "status": "OK",
+          "code": 200,
+          "headers": [
+            {
+              "key": "Server",
+              "value": "nginx/1.25.2"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Vary",
+              "value": "Accept-Encoding"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.2.28"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, private"
+            },
+            {
+              "key": "Date",
+              "value": "Mon, 04 Aug 2025 00:04:41 GMT"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Encoding",
+              "value": "gzip"
+            }
+          ],
+          "body": "{\n    \"status\": \"success\",\n    \"success\": true,\n    \"message\": \"Successfully fetched order.\",\n    \"data\": [\n        {\n            \"id\": 11,\n            \"order_id\": 10,\n            \"name\": \"OR000010 | OLD NAVY | 807524 | SAE-A Trading\"\n        },\n        {\n            \"id\": 13,\n            \"order_id\": 11,\n            \"name\": \"OR000011 | Test | 000001 | SAE-A Trading\"\n        },\n        {\n            \"id\": 24,\n            \"order_id\": 17,\n            \"name\": \"OR000015 | GAP | Sed eu est proidentx | SAE-A Trading\"\n        },\n        {\n            \"id\": 25,\n            \"order_id\": 15,\n            \"name\": \"OR000013 | Target | Test | SAE-A Trading\"\n        },\n        {\n            \"id\": 27,\n            \"order_id\": 12,\n            \"name\": \"OR000012 | GAP | 34324234 | SAE-A Trading\"\n        }\n    ]\n}"
+        }
+      },
+      "description": null
+    },
+    {
+      "v": "17",
+      "name": "Get Styles",
+      "method": "GET",
+      "endpoint": "<<base_url>>/master/styles",
+      "params": [],
+      "headers": [],
+      "preRequestScript": "",
+      "testScript": "",
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "body": {
+        "contentType": null,
+        "body": null
+      },
+      "requestVariables": [],
+      "responses": {
+        "Get Styles (200 OK)": {
+          "name": "Get Styles (200 OK)",
+          "originalRequest": {
+            "v": "6",
+            "name": "Get Styles (200 OK)",
+            "method": "GET",
+            "endpoint": "<<base_url>>/master/styles",
+            "headers": [],
+            "params": [],
+            "body": {
+              "contentType": null,
+              "body": null
+            },
+            "auth": {
+              "authType": "inherit",
+              "authActive": true
+            },
+            "requestVariables": []
+          },
+          "status": "OK",
+          "code": 200,
+          "headers": [
+            {
+              "key": "Server",
+              "value": "nginx/1.25.2"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Vary",
+              "value": "Accept-Encoding"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.2.21"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, private"
+            },
+            {
+              "key": "Date",
+              "value": "Fri, 28 Mar 2025 06:59:51 GMT"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Encoding",
+              "value": "gzip"
+            }
+          ],
+          "body": "{\n    \"success\": true,\n    \"status\": \"success\",\n    \"message\": \"The item has been fetch successfully\",\n    \"data\": [\n        {\n            \"id\": 1,\n            \"style\": \"435345346\"\n        },\n        {\n            \"id\": 4,\n            \"style\": \"H&M\"\n        }\n    ]\n}"
+        }
+      },
+      "description": null
+    },
+    {
+      "v": "17",
+      "name": "Get Buyers",
+      "method": "GET",
+      "endpoint": "<<base_url>>/master/buyers",
+      "params": [],
+      "headers": [],
+      "preRequestScript": "",
+      "testScript": "",
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "body": {
+        "contentType": null,
+        "body": null
+      },
+      "requestVariables": [],
+      "responses": {
+        "Get Buyers (200 OK)": {
+          "name": "Get Buyers (200 OK)",
+          "originalRequest": {
+            "v": "6",
+            "name": "Get Buyers (200 OK)",
+            "method": "GET",
+            "endpoint": "<<base_url>>/master/buyers",
+            "headers": [],
+            "params": [],
+            "body": {
+              "contentType": null,
+              "body": null
+            },
+            "auth": {
+              "authType": "inherit",
+              "authActive": true
+            },
+            "requestVariables": []
+          },
+          "status": "OK",
+          "code": 200,
+          "headers": [
+            {
+              "key": "Server",
+              "value": "nginx/1.25.2"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Vary",
+              "value": "Accept-Encoding"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.2.21"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, private"
+            },
+            {
+              "key": "Date",
+              "value": "Fri, 28 Mar 2025 06:55:08 GMT"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Encoding",
+              "value": "gzip"
+            }
+          ],
+          "body": "{\n    \"success\": true,\n    \"status\": \"success\",\n    \"message\": \"The item has been fetch successfully\",\n    \"data\": [\n        {\n            \"id\": 1,\n            \"name\": \"Judith Underwood\"\n        },\n        {\n            \"id\": 2,\n            \"name\": \"Hannah Pate\"\n        },\n        {\n            \"id\": 3,\n            \"name\": \"Jasmine Santana\"\n        },\n        {\n            \"id\": 4,\n            \"name\": \"Fleur Mcbride\"\n        },\n        {\n            \"id\": 5,\n            \"name\": \"Talon Lopez\"\n        },\n        {\n            \"id\": 6,\n            \"name\": \"Talon Lopez\"\n        },\n        {\n            \"id\": 7,\n            \"name\": \"Talon Lopez\"\n        },\n        {\n            \"id\": 8,\n            \"name\": \"Talon Lopez\"\n        },\n        {\n            \"id\": 9,\n            \"name\": \"Darrel Garrett\"\n        },\n        {\n            \"id\": 12,\n            \"name\": \"Tanek Blackburn\"\n        },\n        {\n            \"id\": 13,\n            \"name\": \"Samantha Marquez\"\n        },\n        {\n            \"id\": 20,\n            \"name\": \"Suki Potter\"\n        },\n        {\n            \"id\": 21,\n            \"name\": \"Lewis Moranc\"\n        }\n    ]\n}"
+        }
+      },
+      "description": null
+    },
+    {
+      "v": "17",
+      "name": "Get Supervisors",
+      "method": "GET",
+      "endpoint": "<<base_url>>/master/supervisors",
+      "params": [],
+      "headers": [],
+      "preRequestScript": "",
+      "testScript": "",
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "body": {
+        "contentType": null,
+        "body": null
+      },
+      "requestVariables": [],
+      "responses": {
+        "Get Supervisors (200 OK)": {
+          "name": "Get Supervisors (200 OK)",
+          "originalRequest": {
+            "v": "6",
+            "name": "Get Supervisors (200 OK)",
+            "method": "GET",
+            "endpoint": "<<base_url>>/master/supervisors",
+            "headers": [],
+            "params": [],
+            "body": {
+              "contentType": null,
+              "body": null
+            },
+            "auth": {
+              "authType": "inherit",
+              "authActive": true
+            },
+            "requestVariables": []
+          },
+          "status": "OK",
+          "code": 200,
+          "headers": [
+            {
+              "key": "Server",
+              "value": "nginx/1.25.2"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Vary",
+              "value": "Accept-Encoding"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.2.21"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, private"
+            },
+            {
+              "key": "Date",
+              "value": "Fri, 28 Mar 2025 07:00:13 GMT"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Encoding",
+              "value": "gzip"
+            }
+          ],
+          "body": "{\n    \"success\": true,\n    \"status\": \"success\",\n    \"message\": \"The item has been fetch successfully\",\n    \"data\": [\n        {\n            \"id\": 3,\n            \"name\": \"Vladimiry\"\n        },\n        {\n            \"id\": 5,\n            \"name\": \"Nevada\"\n        }\n    ]\n}"
+        }
+      },
+      "description": null
+    },
+    {
+      "v": "17",
+      "name": "Get Defect Types",
+      "method": "GET",
+      "endpoint": "<<base_url>>/v1/kiosk/master/defect-types",
+      "params": [],
+      "headers": [],
+      "preRequestScript": "",
+      "testScript": "",
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "body": {
+        "contentType": null,
+        "body": null
+      },
+      "requestVariables": [],
+      "responses": {
+        "Get Defect Types (200 OK)": {
+          "name": "Get Defect Types (200 OK)",
+          "originalRequest": {
+            "v": "6",
+            "name": "Get Defect Types (200 OK)",
+            "method": "GET",
+            "endpoint": "<<base_url>>/master/defect-types",
+            "headers": [],
+            "params": [],
+            "body": {
+              "contentType": null,
+              "body": null
+            },
+            "auth": {
+              "authType": "inherit",
+              "authActive": true
+            },
+            "requestVariables": []
+          },
+          "status": "OK",
+          "code": 200,
+          "headers": [
+            {
+              "key": "Server",
+              "value": "nginx/1.25.2"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Vary",
+              "value": "Accept-Encoding"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.2.21"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, private"
+            },
+            {
+              "key": "Date",
+              "value": "Mon, 07 Apr 2025 15:38:29 GMT"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Encoding",
+              "value": "gzip"
+            }
+          ],
+          "body": "{\n    \"status\": \"success\",\n    \"message\": \"Get Defect Types is successfully\",\n    \"data\": [\n        {\n            \"key\": \"skip_stitch\",\n            \"label\": \"Skip Stitch\"\n        },\n        {\n            \"key\": \"broken_stitch\",\n            \"label\": \"Broken Stitch\"\n        },\n        {\n            \"key\": \"puckering\",\n            \"label\": \"Puckering\"\n        },\n        {\n            \"key\": \"measurement\",\n            \"label\": \"Measurement\"\n        },\n        {\n            \"key\": \"seam\",\n            \"label\": \"Seam\"\n        },\n        {\n            \"key\": \"un_balance\",\n            \"label\": \"Un-balance\"\n        },\n        {\n            \"key\": \"uneven\",\n            \"label\": \"Uneven\"\n        }\n    ]\n}"
+        }
+      },
+      "description": null
+    },
+    {
+      "v": "17",
+      "name": "Get Factory Line",
+      "method": "GET",
+      "endpoint": "<<base_url>>/master/factory-line",
+      "params": [
+        {
+          "key": "line",
+          "value": "1",
+          "active": true,
+          "description": ""
+        }
+      ],
+      "headers": [],
+      "preRequestScript": "",
+      "testScript": "",
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "body": {
+        "contentType": null,
+        "body": null
+      },
+      "requestVariables": [],
+      "responses": {
+        "Get Factory Line": {
+          "name": "Get Factory Line",
+          "originalRequest": {
+            "v": "6",
+            "name": "Get Factory Line",
+            "method": "GET",
+            "endpoint": "<<base_url>>/master/factory-line",
+            "headers": [],
+            "params": [
+              {
+                "key": "line",
+                "value": "1",
+                "active": true,
+                "description": ""
+              }
+            ],
+            "body": {
+              "contentType": null,
+              "body": null
+            },
+            "auth": {
+              "authType": "inherit",
+              "authActive": true
+            },
+            "requestVariables": []
+          },
+          "status": "OK",
+          "code": 200,
+          "headers": [
+            {
+              "key": "Server",
+              "value": "nginx/1.25.2"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Vary",
+              "value": "Accept-Encoding"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.2.28"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, private"
+            },
+            {
+              "key": "Date",
+              "value": "Thu, 10 Jul 2025 00:36:18 GMT"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Encoding",
+              "value": "gzip"
+            }
+          ],
+          "body": "{\n    \"factory\": \"Factory 2\",\n    \"line\": \"Line 1A\"\n}"
+        }
+      },
+      "description": null
+    },
+    {
+      "v": "17",
+      "name": "Get Factory Packing",
+      "method": "GET",
+      "endpoint": "<<base_url>>/master/factory-packing",
+      "params": [],
+      "headers": [],
+      "preRequestScript": "",
+      "testScript": "",
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "body": {
+        "contentType": null,
+        "body": null
+      },
+      "requestVariables": [],
+      "responses": {
+        "Get Factory Packing": {
+          "name": "Get Factory Packing",
+          "originalRequest": {
+            "v": "6",
+            "name": "Get Factory Packing",
+            "method": "GET",
+            "endpoint": "<<base_url>>/master/factory-packing",
+            "headers": [],
+            "params": [
+              {
+                "key": "line",
+                "value": "1",
+                "active": true,
+                "description": ""
+              }
+            ],
+            "body": {
+              "contentType": null,
+              "body": null
+            },
+            "auth": {
+              "authType": "inherit",
+              "authActive": true
+            },
+            "requestVariables": []
+          },
+          "status": "OK",
+          "code": 200,
+          "headers": [
+            {
+              "key": "Server",
+              "value": "nginx/1.25.2"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Vary",
+              "value": "Accept-Encoding"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.2.28"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, private"
+            },
+            {
+              "key": "Date",
+              "value": "Thu, 10 Jul 2025 00:37:10 GMT"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Encoding",
+              "value": "gzip"
+            }
+          ],
+          "body": "{\n    \"factory\": \"Factory 2\",\n    \"packing\": \"Gate 1\"\n}"
+        }
+      },
+      "description": null
+    },
+    {
+      "v": "17",
+      "name": "Get Blocks",
+      "method": "GET",
+      "endpoint": "<<base_url>>/master/blocks",
+      "params": [],
+      "headers": [
+        {
+          "key": "Accept",
+          "value": "application/json",
+          "active": true,
+          "description": ""
+        }
+      ],
+      "preRequestScript": "",
+      "testScript": "",
+      "auth": {
+        "authType": "bearer",
+        "token": "<<access_token>>",
+        "authActive": true
+      },
+      "body": {
+        "contentType": null,
+        "body": null
+      },
+      "requestVariables": [],
+      "responses": {
+        "Get Blocks (200 OK)": {
+          "name": "Get Blocks (200 OK)",
+          "originalRequest": {
+            "v": "6",
+            "name": "Get Blocks (200 OK)",
+            "method": "GET",
+            "endpoint": "<<base_url>>/master/blocks",
+            "headers": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "active": true,
+                "description": ""
+              }
+            ],
+            "params": [],
+            "body": {
+              "contentType": null,
+              "body": null
+            },
+            "auth": {
+              "authType": "inherit",
+              "authActive": true
+            },
+            "requestVariables": []
+          },
+          "status": "OK",
+          "code": 200,
+          "headers": [
+            {
+              "key": "Server",
+              "value": "nginx/1.25.2"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Vary",
+              "value": "Accept-Encoding"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.2.28"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, private"
+            },
+            {
+              "key": "Date",
+              "value": "Tue, 15 Jul 2025 22:44:22 GMT"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Encoding",
+              "value": "gzip"
+            }
+          ],
+          "body": "{\n    \"status\": \"success\",\n    \"message\": \"Successfully fetched blocks.\",\n    \"data\": [\n        {\n            \"id\": 1,\n            \"name\": \"B001\"\n        }\n    ]\n}"
+        }
+      },
+      "description": null
+    },
+    {
+      "v": "17",
+      "name": "Get Racks",
+      "method": "GET",
+      "endpoint": "<<base_url>>/master/racks",
+      "params": [],
+      "headers": [
+        {
+          "key": "Accept",
+          "value": "application/json",
+          "active": true,
+          "description": ""
+        }
+      ],
+      "preRequestScript": "",
+      "testScript": "",
+      "auth": {
+        "authType": "bearer",
+        "token": "<<access_token>>",
+        "authActive": true
+      },
+      "body": {
+        "contentType": null,
+        "body": null
+      },
+      "requestVariables": [],
+      "responses": {
+        "Get Racks (200 OK)": {
+          "name": "Get Racks (200 OK)",
+          "originalRequest": {
+            "v": "6",
+            "name": "Get Racks (200 OK)",
+            "method": "GET",
+            "endpoint": "<<base_url>>/master/racks",
+            "headers": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "active": true,
+                "description": ""
+              }
+            ],
+            "params": [],
+            "body": {
+              "contentType": null,
+              "body": null
+            },
+            "auth": {
+              "authType": "inherit",
+              "authActive": true
+            },
+            "requestVariables": []
+          },
+          "status": "OK",
+          "code": 200,
+          "headers": [
+            {
+              "key": "Server",
+              "value": "nginx/1.25.2"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Vary",
+              "value": "Accept-Encoding"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.2.28"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, private"
+            },
+            {
+              "key": "Date",
+              "value": "Tue, 15 Jul 2025 22:44:56 GMT"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Encoding",
+              "value": "gzip"
+            }
+          ],
+          "body": "{\n    \"status\": \"success\",\n    \"message\": \"Successfully fetched racks.\",\n    \"data\": [\n        {\n            \"id\": 1,\n            \"name\": \"R001\"\n        },\n        {\n            \"id\": 2,\n            \"name\": \"R002\"\n        }\n    ]\n}"
+        }
+      },
+      "description": null
+    },
+    {
+      "v": "17",
+      "name": "Get Relaxation Blocks",
+      "method": "GET",
+      "endpoint": "<<base_url>>/master/relaxation-blocks",
+      "params": [],
+      "headers": [
+        {
+          "key": "Accept",
+          "value": "application/json",
+          "active": true,
+          "description": ""
+        }
+      ],
+      "preRequestScript": "",
+      "testScript": "",
+      "auth": {
+        "authType": "bearer",
+        "token": "<<access_token>>",
+        "authActive": true
+      },
+      "body": {
+        "contentType": null,
+        "body": null
+      },
+      "requestVariables": [],
+      "responses": {
+        "Get Relaxation Blocks (200 OK)": {
+          "name": "Get Relaxation Blocks (200 OK)",
+          "originalRequest": {
+            "v": "6",
+            "name": "Get Relaxation Blocks (200 OK)",
+            "method": "GET",
+            "endpoint": "<<base_url>>/master/relaxation-blocks",
+            "headers": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "active": true,
+                "description": ""
+              }
+            ],
+            "params": [],
+            "body": {
+              "contentType": null,
+              "body": null
+            },
+            "auth": {
+              "authType": "inherit",
+              "authActive": true
+            },
+            "requestVariables": []
+          },
+          "status": "OK",
+          "code": 200,
+          "headers": [
+            {
+              "key": "Server",
+              "value": "nginx/1.25.2"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Vary",
+              "value": "Accept-Encoding"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.2.28"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, private"
+            },
+            {
+              "key": "Date",
+              "value": "Tue, 15 Jul 2025 23:36:56 GMT"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Encoding",
+              "value": "gzip"
+            }
+          ],
+          "body": "{\n    \"status\": \"success\",\n    \"success\": true,\n    \"message\": \"Successfully fetched relaxation blocks.\",\n    \"data\": [\n        {\n            \"id\": 1,\n            \"name\": \"Relax B001\"\n        },\n        {\n            \"id\": 2,\n            \"name\": \"Relax B002\"\n        },\n        {\n            \"id\": 3,\n            \"name\": \"Relax B003\"\n        }\n    ]\n}"
+        }
+      },
+      "description": null
+    },
+    {
+      "v": "17",
+      "name": "Get Relaxation Racks",
+      "method": "GET",
+      "endpoint": "<<base_url>>/master/relaxation-racks",
+      "params": [],
+      "headers": [
+        {
+          "key": "Accept",
+          "value": "application/json",
+          "active": true,
+          "description": ""
+        }
+      ],
+      "preRequestScript": "",
+      "testScript": "",
+      "auth": {
+        "authType": "bearer",
+        "token": "<<access_token>>",
+        "authActive": true
+      },
+      "body": {
+        "contentType": null,
+        "body": null
+      },
+      "requestVariables": [],
+      "responses": {
+        "Get Relaxation Racks (200 OK)": {
+          "name": "Get Relaxation Racks (200 OK)",
+          "originalRequest": {
+            "v": "6",
+            "name": "Get Relaxation Racks (200 OK)",
+            "method": "GET",
+            "endpoint": "<<base_url>>/master/relaxation-racks",
+            "headers": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "active": true,
+                "description": ""
+              }
+            ],
+            "params": [],
+            "body": {
+              "contentType": null,
+              "body": null
+            },
+            "auth": {
+              "authType": "inherit",
+              "authActive": true
+            },
+            "requestVariables": []
+          },
+          "status": "OK",
+          "code": 200,
+          "headers": [
+            {
+              "key": "Server",
+              "value": "nginx/1.25.2"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Vary",
+              "value": "Accept-Encoding"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.2.28"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, private"
+            },
+            {
+              "key": "Date",
+              "value": "Tue, 15 Jul 2025 23:37:31 GMT"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Encoding",
+              "value": "gzip"
+            }
+          ],
+          "body": "{\n    \"status\": \"success\",\n    \"success\": true,\n    \"message\": \"Successfully fetched relaxation racks.\",\n    \"data\": [\n        {\n            \"id\": 1,\n            \"name\": \"Relax R001\"\n        },\n        {\n            \"id\": 2,\n            \"name\": \"Relax R002\"\n        },\n        {\n            \"id\": 3,\n            \"name\": \"Relax R003\"\n        }\n    ]\n}"
+        }
+      },
+      "description": null
+    }
+  ],
+  "auth": {
+    "authType": "inherit",
+    "authActive": true
+  },
+  "headers": [],
+  "variables": [],
+  "description": null
+}

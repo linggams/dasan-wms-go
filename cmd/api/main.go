@@ -50,6 +50,7 @@ func main() {
 	fabricRepo := repository.NewFabricRepository(db)
 	rackRepo := repository.NewRackRepository(db)
 	userRepo := repository.NewUserRepository(db)
+	masterRepo := repository.NewMasterRepository(db)
 
 	// Initialize middleware
 	authMiddleware := middleware.NewAuthMiddleware(cfg.JWT.Secret)
@@ -57,10 +58,12 @@ func main() {
 	// Initialize services
 	checkpointService := service.NewCheckpointService(fabricRepo, rackRepo)
 	authService := service.NewAuthService(userRepo, authMiddleware)
+	masterService := service.NewMasterService(masterRepo)
 
 	// Initialize handlers
 	checkpointHandler := handler.NewCheckpointHandler(checkpointService)
 	authHandler := handler.NewAuthHandler(authService)
+	masterHandler := handler.NewMasterHandler(masterService)
 
 	// Setup router
 	router := gin.New()
@@ -77,16 +80,28 @@ func main() {
 	authGroup := router.Group("/auth")
 	{
 		authGroup.POST("/login", authHandler.Login)
+		authGroup.POST("/token/refresh", authHandler.RefreshToken)
+		authGroup.POST("/forgot-password/request", authHandler.ForgotPasswordRequest)
+		authGroup.POST("/forgot-password/reset", authHandler.ResetPassword)
 	}
 
-	// Protected auth routes
+	// Auth routes (protected)
 	authProtected := router.Group("/auth")
 	authProtected.Use(authMiddleware.Authenticate())
 	{
 		authProtected.GET("/me", authHandler.Me)
+		authProtected.POST("/logout", authHandler.Logout)
 	}
 
-	// Check Point API routes (protected)
+	// Profile routes (protected)
+	profileGroup := router.Group("/profile")
+	profileGroup.Use(authMiddleware.Authenticate())
+	{
+		profileGroup.GET("", authHandler.Me)
+		profileGroup.POST("/change-password", authHandler.ChangePassword)
+	}
+
+	// Check Point routes (protected)
 	checkpointGroup := router.Group("/check-point/v1")
 	checkpointGroup.Use(authMiddleware.Authenticate())
 	{
@@ -95,11 +110,22 @@ func main() {
 		checkpointGroup.POST("/move", checkpointHandler.MoveStage)
 		checkpointGroup.POST("/scan-rack", checkpointHandler.ScanRack)
 		checkpointGroup.POST("/relocation", checkpointHandler.Relocate)
+		checkpointGroup.POST("/relocation", checkpointHandler.Relocate)
+	}
+
+	// Master Data routes (protected)
+	masterGroup := router.Group("/check-point/v1")
+	masterGroup.Use(authMiddleware.Authenticate())
+	{
+		masterGroup.GET("/blocks", masterHandler.GetBlocks)
+		masterGroup.GET("/racks", masterHandler.GetRacks)
+		masterGroup.GET("/relaxation-blocks", masterHandler.GetRelaxationBlocks)
+		masterGroup.GET("/relaxation-racks", masterHandler.GetRelaxationRacks)
 	}
 
 	// Create server
 	srv := &http.Server{
-                Addr: "0.0.0.0:" + cfg.App.Port,
+		Addr: "0.0.0.0:" + cfg.App.Port,
 		Handler:      router,
 		ReadTimeout:  15 * time.Second,
 		WriteTimeout: 15 * time.Second,
