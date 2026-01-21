@@ -21,10 +21,33 @@ import (
 	"github.com/dppi/dppierp-api/pkg/database"
 )
 
+var (
+	Version   = "dev"
+	BuildTime = "unknown"
+	GitCommit = "unknown"
+)
+
 func main() {
+	// Panic recovery for startup crashes
+	defer func() {
+		if r := recover(); r != nil {
+			log.Error().Interface("panic", r).Msg("Application panicked during startup")
+			// Print stack trace for systemd
+			fmt.Fprintf(os.Stderr, "PANIC: %v\n", r)
+			panic(r) // Re-throw to ensure exit code is still non-zero (wait, panic exits with 2 anyway)
+		}
+	}()
+
 	// Setup logging
 	zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
+	zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
 	log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
+
+	log.Info().
+		Str("version", Version).
+		Str("build_time", BuildTime).
+		Str("git_commit", GitCommit).
+		Msg("Starting DPPI ERP API")
 
 	// Load configuration
 	cfg, err := config.Load()
