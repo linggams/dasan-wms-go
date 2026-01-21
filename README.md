@@ -22,12 +22,22 @@ REST API for Check Point fabric management system that includes tracking fabrics
 | Method | Endpoint | Description | Auth |
 |--------|----------|-------------|------|
 | POST | `/auth/login` | User login | ❌ |
+| POST | `/auth/token/refresh` | Refresh access token | ❌ |
+| POST | `/auth/logout` | Logout user | ✅ |
+| POST | `/auth/forgot-password/request` | Request password reset | ❌ |
+| POST | `/auth/forgot-password/reset` | Reset password | ❌ |
 | GET | `/auth/me` | Get current user | ✅ |
+| GET | `/profile` | Get user profile | ✅ |
+| POST | `/profile/change-password` | Change user password | ✅ |
 | GET | `/check-point/v1/overview` | Get all stages | ✅ |
 | POST | `/check-point/v1/scan` | Scan fabric QR | ✅ |
-| POST | `/check-point/v1/move` | Move items to stage | ✅ |
+| POST | `/check-point/v1/move?stage={stage}` | Move items to stage | ✅ |
 | POST | `/check-point/v1/scan-rack` | Scan rack QR | ✅ |
 | POST | `/check-point/v1/relocation` | Relocate rack items | ✅ |
+| GET | `/check-point/v1/master/blocks` | Get all blocks | ✅ |
+| GET | `/check-point/v1/master/racks` | Get all racks | ✅ |
+| GET | `/check-point/v1/master/relaxation-blocks` | Get all relaxation blocks | ✅ |
+| GET | `/check-point/v1/master/relaxation-racks` | Get all relaxation racks | ✅ |
 
 ---
 

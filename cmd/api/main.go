@@ -114,7 +114,7 @@ func main() {
 	}
 
 	// Master Data routes (protected)
-	masterGroup := router.Group("/check-point/v1")
+	masterGroup := router.Group("/master")
 	masterGroup.Use(authMiddleware.Authenticate())
 	{
 		masterGroup.GET("/blocks", masterHandler.GetBlocks)
