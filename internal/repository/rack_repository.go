@@ -20,7 +20,7 @@ func NewRackRepository(db *sql.DB) *RackRepository {
 func (r *RackRepository) FindByName(ctx context.Context, name string) (*domain.Rack, error) {
 	query := `
 		SELECT id, name, created_at, updated_at
-		FROM racks
+		FROM m_racks
 		WHERE name = ? AND deleted_at IS NULL
 		LIMIT 1
 	`
@@ -44,7 +44,7 @@ func (r *RackRepository) FindByName(ctx context.Context, name string) (*domain.R
 func (r *RackRepository) FindByID(ctx context.Context, id int64) (*domain.Rack, error) {
 	query := `
 		SELECT id, name, created_at, updated_at
-		FROM racks
+		FROM m_racks
 		WHERE id = ? AND deleted_at IS NULL
 		LIMIT 1
 	`
@@ -68,7 +68,7 @@ func (r *RackRepository) FindByID(ctx context.Context, id int64) (*domain.Rack, 
 func (r *RackRepository) GetBlockByID(ctx context.Context, id int64) (*domain.Block, error) {
 	query := `
 		SELECT id, name, created_at, updated_at
-		FROM blocks
+		FROM m_blocks
 		WHERE id = ? AND deleted_at IS NULL
 		LIMIT 1
 	`

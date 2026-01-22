@@ -22,7 +22,7 @@ func NewMasterRepository(db *sql.DB) MasterRepository {
 }
 
 func (r *mysqlMasterRepository) GetAllBlocks() ([]domain.Block, error) {
-	query := "SELECT id, name, created_at, updated_at, deleted_at FROM blocks WHERE deleted_at IS NULL"
+	query := "SELECT id, name, created_at, updated_at, deleted_at FROM m_blocks WHERE deleted_at IS NULL"
 	rows, err := r.db.Query(query)
 	if err != nil {
 		return nil, err
@@ -41,7 +41,7 @@ func (r *mysqlMasterRepository) GetAllBlocks() ([]domain.Block, error) {
 }
 
 func (r *mysqlMasterRepository) GetAllRacks() ([]domain.Rack, error) {
-	query := "SELECT id, name, created_at, updated_at, deleted_at FROM racks WHERE deleted_at IS NULL"
+	query := "SELECT id, name, created_at, updated_at, deleted_at FROM m_racks WHERE deleted_at IS NULL"
 	rows, err := r.db.Query(query)
 	if err != nil {
 		return nil, err
