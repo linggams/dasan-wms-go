@@ -9,6 +9,7 @@ import (
 
 type UserRepository interface {
 	FindByEmail(email string) (*domain.User, error)
+	FindByUsername(username string) (*domain.User, error)
 	FindByID(id int64) (*domain.User, error)
 	UpdatePassword(userID int64, newHash string) error
 	StoreResetToken(email, token string) error
@@ -44,6 +45,33 @@ func (r *mysqlUserRepository) FindByEmail(email string) (*domain.User, error) {
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			return nil, nil // User not found
+		}
+		return nil, err
+	}
+
+	return user, nil
+}
+
+func (r *mysqlUserRepository) FindByUsername(username string) (*domain.User, error) {
+	query := `
+		SELECT id, name, email, password, created_at, updated_at
+		FROM users
+		WHERE name = ? AND deleted_at IS NULL
+	`
+
+	user := &domain.User{}
+	err := r.db.QueryRow(query, username).Scan(
+		&user.ID,
+		&user.Name,
+		&user.Email,
+		&user.Password,
+		&user.CreatedAt,
+		&user.UpdatedAt,
+	)
+
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, nil 
 		}
 		return nil, err
 	}

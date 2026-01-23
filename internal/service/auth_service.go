@@ -23,10 +23,9 @@ func NewAuthService(userRepo repository.UserRepository, authMiddleware *middlewa
 	}
 }
 
-// Login authenticates a user by email and password
-func (s *AuthService) Login(email, password string) (string, string, *domain.User, error) {
-	// 1. Fetch user by email
-	user, err := s.userRepo.FindByEmail(email)
+// Login authenticates a user
+func (s *AuthService) Login(username, password string) (string, string, *domain.User, error) {
+	user, err := s.userRepo.FindByUsername(username)
 	if err != nil {
 		return "", "", nil, err
 	}
@@ -34,13 +33,13 @@ func (s *AuthService) Login(email, password string) (string, string, *domain.Use
 		return "", "", nil, errors.New("invalid credentials")
 	}
 
-	// 2. Verify password (bcrypt)
+	// Verify password (bcrypt)
 	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
 	if err != nil {
 		return "", "", nil, errors.New("invalid credentials")
 	}
 
-	// 3. Generate Token
+	// Generate Token
 	accessToken, err := s.authMiddleware.GenerateToken(user.ID, user.Email, user.Name)
 	if err != nil {
 		return "", "", nil, err

@@ -16,7 +16,7 @@ func NewAuthHandler(authService *service.AuthService) *AuthHandler {
 }
 
 type LoginRequest struct {
-	Email    string `json:"email" binding:"required,email"`
+	Username string `json:"username" binding:"required"`
 	Password string `json:"password" binding:"required,min=6"`
 }
 
@@ -62,13 +62,13 @@ func (h *AuthHandler) Login(c *gin.Context) {
 	var req LoginRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		ValidationErrorResponse(c, "Validation Error", map[string][]string{
-			"email":    {"The email field is required and must be valid."},
+			"username": {"The username field is required."},
 			"password": {"The password field is required with minimum 6 characters."},
 		})
 		return
 	}
 
-	token, refreshToken, user, err := h.authService.Login(req.Email, req.Password)
+	token, refreshToken, user, err := h.authService.Login(req.Username, req.Password)
 	if err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{
 			"status":  "error",

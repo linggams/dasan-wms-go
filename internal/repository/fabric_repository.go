@@ -439,22 +439,60 @@ func (r *FabricRepository) UpdateStage(ctx context.Context, req *MoveRequestData
 
 func (r *FabricRepository) handleStage(ctx context.Context, tx *sql.Tx, fabricID int64, toStage, remarks, onStage string) (int64, error) {
 	now := time.Now()
+	currentDate := now.Format("2006-01-02")
+	currentTime := now.Format("15:04:05")
 
-	_, err := tx.ExecContext(ctx, `UPDATE inventory_movements SET status = 'finished', finished_at = ?, updated_at = ? WHERE fabric_id = ? AND status = 'starting' AND deleted_at IS NULL`, now, now, fabricID)
+	// Get inventory_id for this fabric
+	var inventoryID int64
+	err := tx.QueryRowContext(ctx, `SELECT id FROM inventories WHERE fabric_id = ? AND deleted_at IS NULL`, fabricID).Scan(&inventoryID)
+	if err != nil && err != sql.ErrNoRows {
+		return 0, fmt.Errorf("failed to get inventory: %w", err)
+	}
+
+	// If no inventory exists, create one
+	if err == sql.ErrNoRows {
+		invResult, err := tx.ExecContext(ctx, `INSERT INTO inventories (fabric_id, stage, created_at, updated_at) VALUES (?, ?, ?, ?)`, fabricID, toStage, now, now)
+		if err != nil {
+			return 0, fmt.Errorf("failed to create inventory: %w", err)
+		}
+		inventoryID, _ = invResult.LastInsertId()
+	}
+
+	// Get movement_type_id based on stage
+	var movementTypeID int64 = 1 // default
+	_ = tx.QueryRowContext(ctx, `SELECT id FROM movement_types WHERE name = ? LIMIT 1`, toStage).Scan(&movementTypeID)
+
+	// Get existing movement ID to update its time record
+	var existingMovementID int64
+	_ = tx.QueryRowContext(ctx, `SELECT id FROM inventory_movements WHERE fabric_id = ? AND status = 'starting' AND deleted_at IS NULL`, fabricID).Scan(&existingMovementID)
+
+	// Finish existing movement
+	_, err = tx.ExecContext(ctx, `UPDATE inventory_movements SET status = 'finished', updated_at = ? WHERE fabric_id = ? AND status = 'starting' AND deleted_at IS NULL`, now, fabricID)
 	if err != nil {
 		return 0, fmt.Errorf("failed to finish existing movement: %w", err)
 	}
 
-	movementQuery := `INSERT INTO inventory_movements (fabric_id, stage, remarks, status, created_at, updated_at) VALUES (?, ?, ?, 'starting', ?, ?)`
-	result, err := tx.ExecContext(ctx, movementQuery, fabricID, toStage, remarks, now, now)
+	// Update finish_date and finish_time in inventory_movement_times for the finished movement
+	if existingMovementID > 0 {
+		_, err = tx.ExecContext(ctx, `UPDATE inventory_movement_times SET finish_date = ?, finish_time = ?, updated_at = ? WHERE inventory_movement_id = ? AND deleted_at IS NULL`, currentDate, currentTime, now, existingMovementID)
+		if err != nil {
+			return 0, fmt.Errorf("failed to update movement time: %w", err)
+		}
+	}
+
+	// Insert new movement
+	movementQuery := `INSERT INTO inventory_movements (datetime, inventory_id, movement_type_id, fabric_id, remarks, status, action_by, created_at, updated_at) VALUES (?, ?, ?, ?, ?, 'starting', 1, ?, ?)`
+	result, err := tx.ExecContext(ctx, movementQuery, now, inventoryID, movementTypeID, fabricID, remarks, now, now)
 	if err != nil {
 		return 0, fmt.Errorf("failed to insert inventory movement: %w", err)
 	}
 	invMovementID, _ := result.LastInsertId()
 
-	_, err = tx.ExecContext(ctx, `UPDATE inventory_movements SET started_at = ? WHERE id = ?`, now, invMovementID)
+	// Insert movement time record
+	timeQuery := `INSERT INTO inventory_movement_times (inventory_movement_id, start_date, start_time, created_at, updated_at) VALUES (?, ?, ?, ?, ?)`
+	_, err = tx.ExecContext(ctx, timeQuery, invMovementID, currentDate, currentTime, now, now)
 	if err != nil {
-		return 0, fmt.Errorf("failed to update movement start: %w", err)
+		return 0, fmt.Errorf("failed to insert movement time: %w", err)
 	}
 
 	entryType := "out"
@@ -468,7 +506,8 @@ func (r *FabricRepository) handleStage(ctx context.Context, tx *sql.Tx, fabricID
 		return 0, fmt.Errorf("failed to insert inventory entry: %w", err)
 	}
 
-	_, err = tx.ExecContext(ctx, `UPDATE inventories SET stage = ?, updated_at = ? WHERE fabric_id = ? AND deleted_at IS NULL`, toStage, now, fabricID)
+	// Update inventory stage
+	_, err = tx.ExecContext(ctx, `UPDATE inventories SET stage = ?, updated_at = ? WHERE id = ?`, toStage, now, inventoryID)
 	if err != nil {
 		return 0, fmt.Errorf("failed to update inventory stage: %w", err)
 	}
