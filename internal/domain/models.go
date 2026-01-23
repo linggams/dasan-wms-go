@@ -2,7 +2,6 @@ package domain
 
 import "time"
 
-// Stage represents the fabric processing stage
 type Stage string
 
 const (
@@ -17,13 +16,16 @@ const (
 	StageQCFabric       Stage = "qc_fabric"
 )
 
-// StageInfo represents stage information for overview
 type StageInfo struct {
 	ID   int    `json:"id"`
 	Name string `json:"name"`
 }
 
-// GetAllStages returns all available stages
+type MovementType struct {
+	ID   int64  `json:"id"`
+	Name string `json:"name"`
+}
+
 func GetAllStages() []StageInfo {
 	return []StageInfo{
 		{ID: 1, Name: string(StageInventory)},
@@ -38,7 +40,6 @@ func GetAllStages() []StageInfo {
 	}
 }
 
-// IsValidStage checks if the stage is valid
 func IsValidStage(s string) bool {
 	validStages := map[string]bool{
 		string(StageInventory):      true,
@@ -54,13 +55,12 @@ func IsValidStage(s string) bool {
 	return validStages[s]
 }
 
-// User represents the user entity
 type User struct {
 	ID                   int64      `json:"id"`
 	Name                 string     `json:"name"`
 	Email                string     `json:"email"`
 	EmailVerifiedAt      *time.Time `json:"email_verified_at,omitempty"`
-	Password             string     `json:"-"` // Don't serialize password
+	Password             string     `json:"-"` 
 	TwoFactorSecret      *string    `json:"two_factor_secret,omitempty"`
 	TwoFactorRecovery    *string    `json:"two_factor_recovery_codes,omitempty"`
 	TwoFactorConfirmedAt *time.Time `json:"two_factor_confirmed_at,omitempty"`
@@ -110,7 +110,6 @@ type Fabric struct {
 	Inventory          *Inventory `json:"inventory,omitempty"`
 }
 
-// FabricIncoming represents incoming fabric shipment
 type FabricIncoming struct {
 	ID          int64     `json:"id"`
 	Code        string    `json:"code"`
@@ -126,7 +125,6 @@ type FabricIncoming struct {
 	Buyer       *Buyer    `json:"buyer,omitempty"`
 }
 
-// Buyer represents buyer entity
 type Buyer struct {
 	ID            int64      `json:"id"`
 	Code          string     `json:"code"`
@@ -144,7 +142,6 @@ type Buyer struct {
 	DeletedAt     *time.Time `json:"deleted_at,omitempty"`
 }
 
-// Inventory represents fabric inventory tracking
 type Inventory struct {
 	ID        int64      `json:"id"`
 	Datetime  string     `json:"datetime"`
@@ -157,7 +154,6 @@ type Inventory struct {
 	DeletedAt *time.Time `json:"deleted_at,omitempty"`
 }
 
-// Block represents storage block
 type Block struct {
 	ID        int64      `json:"id"`
 	Name      string     `json:"name"`
@@ -166,7 +162,6 @@ type Block struct {
 	DeletedAt *time.Time `json:"deleted_at,omitempty"`
 }
 
-// Rack represents storage rack
 type Rack struct {
 	ID        int64      `json:"id"`
 	Name      string     `json:"name"`
@@ -175,7 +170,6 @@ type Rack struct {
 	DeletedAt *time.Time `json:"deleted_at,omitempty"`
 }
 
-// RelaxationBlock represents relaxation block
 type RelaxationBlock struct {
 	ID        int64      `json:"id"`
 	Name      string     `json:"name"`
@@ -184,7 +178,6 @@ type RelaxationBlock struct {
 	DeletedAt *time.Time `json:"deleted_at,omitempty"`
 }
 
-// RelaxationRack represents relaxation rack
 type RelaxationRack struct {
 	ID        int64      `json:"id"`
 	Name      string     `json:"name"`

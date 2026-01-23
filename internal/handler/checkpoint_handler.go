@@ -15,18 +15,19 @@ func NewCheckpointHandler(svc *service.CheckpointService) *CheckpointHandler {
 	return &CheckpointHandler{service: svc}
 }
 
-// GetOverview handles GET /check-point/v1/overview
 func (h *CheckpointHandler) GetOverview(c *gin.Context) {
-	stages := h.service.GetOverview(c.Request.Context())
+	stages, err := h.service.GetOverview(c.Request.Context())
+	if err != nil {
+		ErrorResponse(c, http.StatusInternalServerError, "Failed to fetch overview.", err.Error())
+		return
+	}
 	SuccessResponse(c, http.StatusOK, "Successfully fetched overview.", stages)
 }
 
-// ScanQRRequest represents the scan request body
 type ScanQRRequest struct {
 	Code string `json:"code" binding:"required"`
 }
 
-// ScanQR handles POST /check-point/v1/scan
 func (h *CheckpointHandler) ScanQR(c *gin.Context) {
 	var req ScanQRRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -45,27 +46,65 @@ func (h *CheckpointHandler) ScanQR(c *gin.Context) {
 	SuccessResponse(c, http.StatusOK, "Successfully founded QR.", result)
 }
 
-// MoveStage handles POST /check-point/v1/move
-func (h *CheckpointHandler) MoveStage(c *gin.Context) {
-	stage := c.Query("stage")
-	if stage == "" {
-		ValidationErrorResponse(c, "The stage is required.", map[string][]string{
-			"stage": {"The stage is required."},
-		})
-		return
-	}
+type MoveStageRequest struct {
+	Stage             string              `json:"stage" binding:"required"`
+	BlockID           *int64              `json:"block_id,omitempty"`
+	RackID            *int64              `json:"rack_id,omitempty"`
+	RelaxationBlockID *int64              `json:"relaxation_block_id,omitempty"`
+	RelaxationRackID  *int64              `json:"relaxation_rack_id,omitempty"`
+	Entries           []service.MoveEntry `json:"entries" binding:"required,dive"`
+}
 
-	var req service.MoveRequest
+func (h *CheckpointHandler) MoveStage(c *gin.Context) {
+	var req MoveStageRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
-		ValidationErrorResponse(c, "The entries field is required.", map[string][]string{
+		ValidationErrorResponse(c, "Validation error.", map[string][]string{
+			"stage":   {"The stage field is required."},
 			"entries": {"The entries field is required."},
 		})
 		return
 	}
 
-	req.Stage = stage
+	if req.Stage == "inventory" {
+		if req.BlockID == nil {
+			ValidationErrorResponse(c, "Block ID is required.", map[string][]string{
+				"block_id": {"Block ID is required."},
+			})
+			return
+		}
+		if req.RackID == nil {
+			ValidationErrorResponse(c, "Rack ID is required.", map[string][]string{
+				"rack_id": {"Rack ID is required."},
+			})
+			return
+		}
+	}
 
-	if err := h.service.MoveStage(c.Request.Context(), &req); err != nil {
+	if req.Stage == "relaxation" {
+		if req.RelaxationBlockID == nil {
+			ValidationErrorResponse(c, "Relaxation block ID is required.", map[string][]string{
+				"relaxation_block_id": {"Relaxation block ID is required."},
+			})
+			return
+		}
+		if req.RelaxationRackID == nil {
+			ValidationErrorResponse(c, "Relaxation rack ID is required.", map[string][]string{
+				"relaxation_rack_id": {"Relaxation rack ID is required."},
+			})
+			return
+		}
+	}
+
+	svcReq := &service.MoveRequest{
+		Stage:             req.Stage,
+		BlockID:           req.BlockID,
+		RackID:            req.RackID,
+		RelaxationBlockID: req.RelaxationBlockID,
+		RelaxationRackID:  req.RelaxationRackID,
+		Entries:           req.Entries,
+	}
+
+	if err := h.service.MoveStage(c.Request.Context(), svcReq); err != nil {
 		ErrorResponse(c, http.StatusUnprocessableEntity, "Failed to moved items.", err.Error())
 		return
 	}
@@ -73,7 +112,6 @@ func (h *CheckpointHandler) MoveStage(c *gin.Context) {
 	SuccessResponse(c, http.StatusOK, "Successfully moved items.", true)
 }
 
-// ScanRack handles POST /check-point/v1/scan-rack
 func (h *CheckpointHandler) ScanRack(c *gin.Context) {
 	var req ScanQRRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -92,19 +130,24 @@ func (h *CheckpointHandler) ScanRack(c *gin.Context) {
 	SuccessResponse(c, http.StatusOK, "Successfully founded Rack QR.", result)
 }
 
-// RelocationRequest represents the relocation request body
 type RelocationRequest struct {
 	CurrentRackID int64 `json:"current_rack_id" binding:"required"`
 	NewRackID     int64 `json:"new_rack_id" binding:"required"`
 }
 
-// Relocate handles POST /check-point/v1/relocation
 func (h *CheckpointHandler) Relocate(c *gin.Context) {
 	var req RelocationRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		ValidationErrorResponse(c, "Invalid request body.", map[string][]string{
 			"current_rack_id": {"The current rack id is required."},
 			"new_rack_id":     {"The new rack id is required."},
+		})
+		return
+	}
+
+	if req.CurrentRackID == req.NewRackID {
+		ValidationErrorResponse(c, "The current and new rack IDs must be different.", map[string][]string{
+			"current_rack_id": {"The current and new rack IDs must be different."},
 		})
 		return
 	}

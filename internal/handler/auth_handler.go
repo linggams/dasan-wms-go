@@ -15,13 +15,11 @@ func NewAuthHandler(authService *service.AuthService) *AuthHandler {
 	return &AuthHandler{authService: authService}
 }
 
-// LoginRequest represents the login request body
 type LoginRequest struct {
 	Email    string `json:"email" binding:"required,email"`
 	Password string `json:"password" binding:"required,min=6"`
 }
 
-// LoginResponse represents the login response
 type LoginResponse struct {
 	TokenType       string `json:"token_type"`
 	AccessToken     string `json:"access_token"`
@@ -38,17 +36,14 @@ type LoginResponse struct {
 	} `json:"has_access"`
 }
 
-// RefreshTokenRequest represents the refresh token request body
 type RefreshTokenRequest struct {
 	RefreshToken string `json:"refresh_token" binding:"required"`
 }
 
-// ForgotPasswordRequest represents the forgot password request body
 type ForgotPasswordRequest struct {
 	Email string `json:"email" binding:"required,email"`
 }
 
-// ResetPasswordRequest represents the reset password request body
 type ResetPasswordRequest struct {
 	Email                string `json:"email" binding:"required,email"`
 	Token                string `json:"token" binding:"required"`
@@ -56,7 +51,6 @@ type ResetPasswordRequest struct {
 	PasswordConfirmation string `json:"password_confirmation" binding:"required,eqfield=Password"`
 }
 
-// ChangePasswordRequest represents the change password request body
 type ChangePasswordRequest struct {
 	CurrentPassword      string `json:"current_password" binding:"required"`
 	Password             string `json:"password" binding:"required,min=6"`

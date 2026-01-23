@@ -20,7 +20,6 @@ func NewCheckpointService(fabricRepo *repository.FabricRepository, rackRepo *rep
 	}
 }
 
-// ScanQRResponse represents the scan response
 type ScanQRResponse struct {
 	QRCode     string  `json:"qr_code"`
 	Buyer      string  `json:"buyer"`
@@ -30,14 +29,12 @@ type ScanQRResponse struct {
 	FinishDate *string `json:"finish_date,omitempty"`
 }
 
-// GetOverview returns all available stages
-func (s *CheckpointService) GetOverview(ctx context.Context) []domain.StageInfo {
-	return domain.GetAllStages()
+func (s *CheckpointService) GetOverview(ctx context.Context) ([]domain.MovementType, error) {
+	return s.fabricRepo.GetMovementTypes(ctx)
 }
 
-// ScanQR scans a fabric QR code and returns its details
 func (s *CheckpointService) ScanQR(ctx context.Context, code string) (*ScanQRResponse, error) {
-	fabric, err := s.fabricRepo.FindByCode(ctx, code)
+	fabric, err := s.fabricRepo.FindByCodeWithInventory(ctx, code)
 	if err != nil {
 		return nil, fmt.Errorf("error finding fabric: %w", err)
 	}
@@ -46,39 +43,39 @@ func (s *CheckpointService) ScanQR(ctx context.Context, code string) (*ScanQRRes
 	}
 
 	response := &ScanQRResponse{
-		QRCode:   fabric.Code,
-		Buyer:    fabric.Buyer,
-		Style:    fabric.Style,
-		Yard:     fabric.Yard,
-		QCResult: fabric.QCResult,
+		QRCode: fabric.Code,
+		Buyer:  fabric.Buyer,
+		Style:  fabric.Style,
+		Yard:   fabric.Yard,
 	}
 
-	if fabric.FinishDate != nil {
+	if fabric.Inventory != nil && fabric.Inventory.Stage == string(domain.StageQCFabric) {
+		response.QCResult = fabric.QCResult
+	}
+
+	if fabric.Inventory != nil && fabric.Inventory.Stage == string(domain.StageRelaxation) {
 		response.FinishDate = fabric.FinishDate
 	}
 
 	return response, nil
 }
 
-// MoveEntry represents an entry in the move request
 type MoveEntry struct {
-	Code       string  `json:"code" validate:"required"`
+	Code       string  `json:"code" binding:"required"`
 	Yard       float64 `json:"yard,omitempty"`
 	FinishDate string  `json:"finish_date,omitempty"`
 	QCResult   string  `json:"qc_result,omitempty"`
 }
 
-// MoveRequest represents the move stage request
 type MoveRequest struct {
-	Stage             string      `json:"stage" validate:"required"`
+	Stage             string      `json:"stage" binding:"required"`
 	BlockID           *int64      `json:"block_id,omitempty"`
 	RackID            *int64      `json:"rack_id,omitempty"`
 	RelaxationBlockID *int64      `json:"relaxation_block_id,omitempty"`
 	RelaxationRackID  *int64      `json:"relaxation_rack_id,omitempty"`
-	Entries           []MoveEntry `json:"entries" validate:"required,dive"`
+	Entries           []MoveEntry `json:"entries" binding:"required,dive"`
 }
 
-// MoveStage moves fabrics to a new stage
 func (s *CheckpointService) MoveStage(ctx context.Context, req *MoveRequest) error {
 	if !domain.IsValidStage(req.Stage) {
 		return fmt.Errorf("invalid stage: %s", req.Stage)
@@ -88,26 +85,59 @@ func (s *CheckpointService) MoveStage(ctx context.Context, req *MoveRequest) err
 		return fmt.Errorf("entries field is required")
 	}
 
-	codes := make([]string, len(req.Entries))
+	repoReq := &repository.MoveRequestData{
+		Stage:             req.Stage,
+		BlockID:           req.BlockID,
+		RackID:            req.RackID,
+		RelaxationBlockID: req.RelaxationBlockID,
+		RelaxationRackID:  req.RelaxationRackID,
+		Entries:           make([]repository.MoveEntryData, len(req.Entries)),
+	}
+
 	for i, entry := range req.Entries {
-		codes[i] = entry.Code
+		repoReq.Entries[i] = repository.MoveEntryData{
+			Code:       entry.Code,
+			Yard:       entry.Yard,
+			FinishDate: entry.FinishDate,
+			QCResult:   entry.QCResult,
+		}
 	}
 
-	updates := make(map[string]interface{})
-	if req.BlockID != nil {
-		updates["block_id"] = *req.BlockID
+	switch req.Stage {
+	case string(domain.StageInventory):
+		return s.fabricRepo.UpdateBlockRack(ctx, repoReq)
+	case string(domain.StageRelaxation):
+		return s.fabricRepo.UpdateRelaxationBlockRack(ctx, repoReq)
+	case string(domain.StageQCFabric):
+		return s.fabricRepo.UpdateStageWithQC(ctx, repoReq)
+	default:
+		return s.fabricRepo.UpdateStage(ctx, repoReq)
 	}
-	if req.RackID != nil {
-		updates["rack_id"] = *req.RackID
-	}
-
-	return s.fabricRepo.UpdateFabricsForMove(ctx, codes, req.Stage, updates)
 }
 
-// ScanRackResponse represents the scan rack response
 type ScanRackResponse struct {
-	Result  []domain.Fabric `json:"result"`
-	Summary RackSummary     `json:"summary"`
+	Result  []ScanRackFabricItem `json:"result"`
+	Summary RackSummary          `json:"summary"`
+}
+
+type ScanRackFabricItem struct {
+	ID                int64   `json:"id"`
+	Code              string  `json:"code"`
+	Color             string  `json:"color,omitempty"`
+	Lot               string  `json:"lot,omitempty"`
+	Roll              string  `json:"roll,omitempty"`
+	Weight            string  `json:"weight,omitempty"`
+	Yard              string  `json:"yard"`
+	FabricType        *string `json:"fabric_type,omitempty"`
+	FabricContain     *string `json:"fabric_contain,omitempty"`
+	FinishDate        *string `json:"finish_date,omitempty"`
+	QCResult          *string `json:"qc_result,omitempty"`
+	Buyer             string  `json:"buyer"`
+	Style             string  `json:"style"`
+	BlockID           *int64  `json:"block_id,omitempty"`
+	RackID            *int64  `json:"rack_id,omitempty"`
+	RelaxationBlockID *int64  `json:"relaxation_block_id,omitempty"`
+	RelaxationRackID  *int64  `json:"relaxation_rack_id,omitempty"`
 }
 
 type RackSummary struct {
@@ -118,7 +148,6 @@ type RackSummary struct {
 	RackNumber  string  `json:"rack_number"`
 }
 
-// ScanRack scans a rack and returns all fabrics in it
 func (s *CheckpointService) ScanRack(ctx context.Context, code string) (*ScanRackResponse, error) {
 	rack, err := s.rackRepo.FindByName(ctx, code)
 	if err != nil {
@@ -133,9 +162,10 @@ func (s *CheckpointService) ScanRack(ctx context.Context, code string) (*ScanRac
 		return nil, fmt.Errorf("error getting fabrics: %w", err)
 	}
 
-	// Calculate summary
 	var totalYard, totalWeight float64
 	var blockName string
+	var result []ScanRackFabricItem
+
 	for _, f := range fabrics {
 		var yard, weight float64
 		fmt.Sscanf(f.Yard, "%f", &yard)
@@ -146,10 +176,34 @@ func (s *CheckpointService) ScanRack(ctx context.Context, code string) (*ScanRac
 		if f.Block != nil && blockName == "" {
 			blockName = f.Block.Name
 		}
+
+		result = append(result, ScanRackFabricItem{
+			ID:                f.ID,
+			Code:              f.Code,
+			Color:             f.Color,
+			Lot:               f.Lot,
+			Roll:              f.Roll,
+			Weight:            f.Weight,
+			Yard:              f.Yard,
+			FabricType:        f.FabricType,
+			FabricContain:     f.FabricContain,
+			FinishDate:        f.FinishDate,
+			QCResult:          f.QCResult,
+			Buyer:             f.Buyer,
+			Style:             f.Style,
+			BlockID:           f.BlockID,
+			RackID:            f.RackID,
+			RelaxationBlockID: f.RelaxationBlockID,
+			RelaxationRackID:  f.RelaxationRackID,
+		})
+	}
+
+	if blockName == "" {
+		blockName = "-"
 	}
 
 	return &ScanRackResponse{
-		Result: fabrics,
+		Result: result,
 		Summary: RackSummary{
 			TotalItems:  len(fabrics),
 			TotalYard:   totalYard,
@@ -160,13 +214,11 @@ func (s *CheckpointService) ScanRack(ctx context.Context, code string) (*ScanRac
 	}, nil
 }
 
-// RelocationRequest represents the relocation request
 type RelocationRequest struct {
-	CurrentRackID int64 `json:"current_rack_id" validate:"required"`
-	NewRackID     int64 `json:"new_rack_id" validate:"required"`
+	CurrentRackID int64 `json:"current_rack_id" binding:"required"`
+	NewRackID     int64 `json:"new_rack_id" binding:"required"`
 }
 
-// Relocate moves all fabrics from one rack to another
 func (s *CheckpointService) Relocate(ctx context.Context, req *RelocationRequest) error {
-	return s.fabricRepo.RelocateFabrics(ctx, req.CurrentRackID, req.NewRackID)
+	return s.fabricRepo.RelocateFabricsWithLog(ctx, req.CurrentRackID, req.NewRackID)
 }

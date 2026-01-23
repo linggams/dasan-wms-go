@@ -84,8 +84,6 @@ func (s *AuthService) RefreshToken(tokenString string) (string, string, error) {
 
 // Logout performs any necessary server-side logout operations
 func (s *AuthService) Logout() error {
-	// Since we are using stateless JWT, we just return success.
-	// In a more complex system, we might blacklist the token here.
 	return nil
 }
 
@@ -168,7 +166,7 @@ func (s *AuthService) ChangePassword(userID int64, oldPassword, newPassword stri
 	return s.userRepo.UpdatePassword(user.ID, hashedPassword)
 }
 
-// HashPassword is a utility to hash passwords (useful for registration or seeding)
+// HashPassword is a utility to hash passwords
 func HashPassword(password string) (string, error) {
 	bytes, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	return string(bytes), err
