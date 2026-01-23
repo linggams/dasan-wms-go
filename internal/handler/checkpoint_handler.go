@@ -47,7 +47,6 @@ func (h *CheckpointHandler) ScanQR(c *gin.Context) {
 }
 
 type MoveStageRequest struct {
-	Stage             string              `json:"stage" binding:"required"`
 	BlockID           *int64              `json:"block_id,omitempty"`
 	RackID            *int64              `json:"rack_id,omitempty"`
 	RelaxationBlockID *int64              `json:"relaxation_block_id,omitempty"`
@@ -56,16 +55,23 @@ type MoveStageRequest struct {
 }
 
 func (h *CheckpointHandler) MoveStage(c *gin.Context) {
+	stage := c.Query("stage")
+	if stage == "" {
+		ValidationErrorResponse(c, "Validation error.", map[string][]string{
+			"stage": {"The stage field is required."},
+		})
+		return
+	}
+
 	var req MoveStageRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		ValidationErrorResponse(c, "Validation error.", map[string][]string{
-			"stage":   {"The stage field is required."},
 			"entries": {"The entries field is required."},
 		})
 		return
 	}
 
-	if req.Stage == "inventory" {
+	if stage == "inventory" {
 		if req.BlockID == nil {
 			ValidationErrorResponse(c, "Block ID is required.", map[string][]string{
 				"block_id": {"Block ID is required."},
@@ -80,7 +86,7 @@ func (h *CheckpointHandler) MoveStage(c *gin.Context) {
 		}
 	}
 
-	if req.Stage == "relaxation" {
+	if stage == "relaxation" {
 		if req.RelaxationBlockID == nil {
 			ValidationErrorResponse(c, "Relaxation block ID is required.", map[string][]string{
 				"relaxation_block_id": {"Relaxation block ID is required."},
@@ -96,7 +102,7 @@ func (h *CheckpointHandler) MoveStage(c *gin.Context) {
 	}
 
 	svcReq := &service.MoveRequest{
-		Stage:             req.Stage,
+		Stage:             stage,
 		BlockID:           req.BlockID,
 		RackID:            req.RackID,
 		RelaxationBlockID: req.RelaxationBlockID,
