@@ -47,7 +47,7 @@ func (r *FabricRepository) FindByCode(ctx context.Context, code string) (*domain
 			f.rack_id, f.block_id, f.relaxation_rack_id, f.relaxation_block_id,
 			f.finish_date, f.qc_result, f.status, f.created_at, f.updated_at,
 			COALESCE(b.name, '-') as buyer,
-			COALESCE(fi.style, '-') as style
+			COALESCE(o.style, '-') as style
 		FROM fabrics f
 		LEFT JOIN fabric_incomings fi ON f.fabric_incoming_id = fi.id
 		LEFT JOIN orders o ON fi.order_id = o.id
@@ -94,7 +94,7 @@ func (r *FabricRepository) FindByCodeWithInventory(ctx context.Context, code str
 			f.rack_id, f.block_id, f.relaxation_rack_id, f.relaxation_block_id,
 			f.finish_date, f.qc_result, f.status, f.created_at, f.updated_at,
 			COALESCE(b.name, '-') as buyer,
-			COALESCE(fi.style, '-') as style,
+			COALESCE(o.style, '-') as style,
 			i.id as inv_id, i.stage as inv_stage
 		FROM fabrics f
 		LEFT JOIN fabric_incomings fi ON f.fabric_incoming_id = fi.id
@@ -152,7 +152,7 @@ func (r *FabricRepository) GetFabricsByRackID(ctx context.Context, rackID int64)
 			f.rack_id, f.block_id, f.relaxation_rack_id, f.relaxation_block_id,
 			f.finish_date, f.qc_result, f.status, f.created_at, f.updated_at,
 			COALESCE(b.name, '-') as buyer,
-			COALESCE(fi.style, '-') as style,
+			COALESCE(o.style, '-') as style,
 			blk.id as block_id_rel, blk.name as block_name
 		FROM fabrics f
 		LEFT JOIN fabric_incomings fi ON f.fabric_incoming_id = fi.id
